@@ -1,0 +1,66 @@
+.section-heading {
+  max-width: 620px;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.section-heading-badge {
+  width: fit-content;
+  margin: 0 auto 1.8rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 2rem;
+  border-radius: 15px;
+  border: 1px solid var(--accent-color);
+  box-shadow: 0 15px 40px color-mix(in srgb, var(--accent-color), transparent 80%);
+}
+
+.section-heading-badge i {
+  color: var(--accent-color);
+  font-size: 1.3rem;
+}
+
+.section-heading-badge span {
+  color: var(--accent-color);
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+}
+
+.section-heading p {
+  max-width: 480px;
+  margin: 0 auto;
+  color: var(--muted-text-color);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.8;
+}
+
+@media (max-width: 1024px) {
+
+  .section-heading .section-heading-badge {
+    gap: 0.65rem;
+    padding: 0.85rem 1.5rem;
+    border-radius: 14px;
+  }
+
+  .section-heading .section-heading-badge i {
+    font-size: 1rem;
+  }
+
+  .section-heading .section-heading-badge span {
+    font-size: 1rem;
+    letter-spacing: 0.25rem;
+  }
+
+  .section-heading p {
+    width: min(100%, 32rem);
+    margin: 1rem auto 0;
+    padding: 0 1rem;
+    font-size: 0.9rem;
+    line-height: 1.8;
+  }
+
+}

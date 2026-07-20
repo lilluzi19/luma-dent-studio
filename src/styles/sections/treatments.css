@@ -1,0 +1,405 @@
+.treatments-background {
+  background: var(--background-color) !important;
+}
+
+.treatments {
+  padding-top: 10rem;
+  padding-bottom: 2.5rem;
+  background: var(--background-color);
+}
+
+.treatments .treatment-filters {
+  display: flex;
+  justify-content: center;
+  gap: 0.8rem;
+  margin-top: 3rem;
+}
+
+.treatments .treatment-filter {
+  padding: 0.8rem 1.2rem;
+  border: 1px solid var(--accent-color);
+  border-radius: 15px;
+  background: transparent;
+  color: var(--text-color);
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: 0.4s ease;
+}
+
+.treatments .treatment-filter:hover,
+.treatments .treatment-filter.active {
+  background: var(--accent-color);
+  color: var(--text-color);
+  box-shadow: 0 15px 40px color-mix(in srgb, var(--accent-color), transparent 80%);
+}
+
+.treatments .treatments-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.4rem;
+  padding-top: 3rem;
+}
+
+.treatments .treatment-card-wrapper {
+  height: 100%;
+  padding-bottom: 12px;
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    opacity 0.7s ease,
+    transform 0.7s ease;
+}
+
+.treatments .treatment-card-wrapper.treatment-fade-out {
+  opacity: 0;
+  transform: translateY(18px);
+}
+
+.treatments .treatment-card-wrapper.treatment-fade-in {
+  opacity: 0;
+  transform: translateY(18px);
+  animation: treatmentFadeIn 0.7s ease forwards;
+}
+
+.treatments .treatment-card-wrapper.treatment-filtering {
+  opacity: 0;
+  transform: scale(0.96);
+}
+
+.treatments .treatment-card-wrapper.treatment-hidden {
+  display: none;
+}
+
+.treatments .treatment-card {
+  height: 100%;
+  min-height: 430px;
+  padding: 2rem;
+  border-radius: 15px;
+  background: var(--surface-color);
+  box-shadow: 0 15px 40px color-mix(in srgb, var(--accent-color), transparent 85%);
+  transition: 0.4s ease;
+  display: flex;
+  flex-direction: column;
+  will-change: transform, box-shadow;
+}
+
+.treatments .treatment-card-wrapper:hover .treatment-card {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 40px color-mix(in srgb, var(--accent-color), transparent 70%);
+}
+
+.treatments .treatment-icon {
+  width: 68px;
+  height: 68px;
+  margin-bottom: 1.5rem;
+  border-radius: 15px;
+  background: color-mix(in srgb, var(--accent-color), transparent 80%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: IconPulse 2.5s ease-in-out infinite;
+  transition: 0.4s ease;
+}
+
+.treatments .treatment-icon i {
+  color: var(--accent-color);
+  font-size: 1.8rem;
+}
+
+.treatments .treatment-card-wrapper:hover .treatment-icon {
+  background: color-mix(in srgb, var(--accent-color), transparent 70%);
+}
+
+.treatments .treatment-card h3 {
+  margin: 0 0 1rem;
+  color: var(--text-color);
+  font-size: 1.45rem;
+  font-weight: 600;
+}
+
+.treatments .treatment-card p {
+  margin: 0 0 1.4rem;
+  color: var(--muted-text-color);
+  font-size: 0.95rem;
+  font-weight: 400;
+  line-height: 1.75;
+}
+
+.treatments .treatment-card ul {
+  display: grid;
+  gap: 0.75rem;
+  margin: auto 0 1.6rem;
+  padding: 0;
+  list-style: none;
+}
+
+.treatments .treatment-card li {
+  color: var(--muted-text-color);
+  font-size: 0.88rem;
+  font-weight: 400;
+}
+
+.treatments .treatment-card li::before {
+  content: "\F26E";
+  margin-right: 0.5rem;
+  font-family: "bootstrap-icons";
+  color: var(--accent-color);
+}
+
+.treatments .treatment-card a {
+  width: fit-content;
+  min-height: 44px;
+  padding: 0 1rem;
+  border-radius: 15px;
+  background: var(--accent-color);
+  color: var(--text-color);
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  transition: 0.4s ease;
+}
+
+.treatments .treatment-card a:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 40px color-mix(in srgb, var(--accent-color), transparent 80%);
+}
+
+.treatments .treatment-cta-wrapper {
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    opacity 0.7s ease,
+    transform 0.7s ease;
+}
+
+.treatments .treatment-cta-wrapper.treatment-fade-out {
+  opacity: 0;
+  transform: translateY(18px);
+}
+
+.treatments .treatment-cta-wrapper.treatment-fade-in {
+  opacity: 0;
+  transform: translateY(18px);
+  animation: treatmentFadeIn 0.7s ease forwards;
+}
+
+.treatments .treatment-cta {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 2rem;
+  align-items: center;
+  margin-top: 1.4rem;
+  padding: 2rem;
+  border-radius: 15px;
+  background: var(--surface-color);
+  box-shadow: 0 15px 40px color-mix(in srgb, var(--accent-color), transparent 85%);
+}
+
+.treatments .treatment-cta span {
+  display: inline-block;
+  margin-bottom: 0.7rem;
+  color: var(--accent-color);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.treatments .treatment-cta h2 {
+  margin: 0 0 0.7rem;
+  color: var(--text-color);
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.treatments .treatment-cta p {
+  margin: 0;
+  max-width: 620px;
+  color: var(--muted-text-color);
+  font-size: 0.95rem;
+  font-weight: 400;
+  line-height: 1.7;
+}
+
+.treatments .treatment-cta a {
+  min-height: 48px;
+  padding: 0 1.4rem;
+  border-radius: 15px;
+  background: var(--accent-color);
+  color: var(--text-color);
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  transition: 0.4s ease;
+}
+
+.treatments .treatment-cta a:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 40px color-mix(in srgb, var(--accent-color), transparent 80%);
+}
+
+@media (max-width: 1024px) {
+
+  .treatments {
+    padding-top: 7.5rem;
+    padding-bottom: 2.5rem;
+  }
+
+  .treatments .treatment-filters {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.6rem;
+    margin-top: 2rem;
+    margin-bottom: 0;
+  }
+
+  .treatments .treatment-filter {
+    min-height: 40px;
+    padding: 0.6rem 0.85rem;
+    font-size: 0.7rem;
+  }
+
+  .treatments .treatment-filter:hover {
+    background: transparent;
+    color: var(--text-color);
+    box-shadow: none;
+    transform: none;
+  }
+
+  .treatments .treatment-filter.active {
+    background: var(--accent-color);
+    color: var(--text-color);
+    box-shadow: 0 15px 40px color-mix(in srgb, var(--accent-color), transparent 85%);
+  }
+
+  .treatments .treatments-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-top: -0.5rem;
+  }
+
+  .treatments .treatment-card {
+    min-height: 0;
+    padding: 1.15rem;
+  }
+
+  .treatments .treatment-card-wrapper:hover .treatment-card {
+    transform: none !important;
+    box-shadow: 0 15px 40px color-mix(in srgb, var(--accent-color), transparent 85%);
+  }
+
+  .treatments .treatment-card-wrapper:hover .treatment-icon {
+    background: color-mix(in srgb, var(--accent-color), transparent 80%);
+  }
+
+  .treatments .treatment-icon {
+    width: 52px;
+    height: 52px;
+    margin-bottom: 1rem;
+  }
+
+  .treatments .treatment-icon i {
+    font-size: 1.35rem;
+  }
+
+  .treatments .treatment-card h3 {
+    margin-bottom: 0.65rem;
+    font-size: clamp(0.95rem, 3.2vw, 1.25rem);
+    line-height: 1.25;
+  }
+
+  .treatments .treatment-card p {
+    margin-bottom: 1rem;
+    font-size: clamp(0.74rem, 2.3vw, 0.85rem);
+    line-height: 1.6;
+  }
+
+  .treatments .treatment-card ul {
+    margin-top: 0.9;
+    margin-bottom: 1;
+  }
+
+  .treatments .treatment-card li {
+    margin-bottom: 0.15rem;
+    font-size: clamp(0.68rem, 2.15vw, 0.78rem);
+    line-height: 1.3;
+  }
+
+  .treatments .treatment-card li:last-child {
+    margin-bottom: 0;
+  }
+
+  .treatments .treatment-card .btn,
+  .treatments .treatment-card a {
+    min-height: 38px;
+    margin-top: auto;
+    padding: 0 0.7rem;
+    font-size: 0.66rem;
+    letter-spacing: 0.8px;
+  }
+
+  .treatments .treatment-card .btn:hover,
+  .treatments .treatment-card a:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  .treatments .treatment-cta {
+    margin-top: 1.5rem;
+    padding: 1.7rem 1.25rem;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    text-align: center;
+  }
+
+  .treatments .treatment-cta > div {
+    text-align: center;
+  }
+
+  .treatments .treatment-cta span {
+    display: block;
+    text-align: center;
+    margin-bottom: 0.7rem;
+  }
+
+  .treatments .treatment-cta h2 {
+    max-width: 320px;
+    margin: 0 auto 0.85rem;
+    font-size: clamp(1.45rem, 5vw, 2rem);
+    line-height: 1.15;
+  }
+
+  .treatments .treatment-cta p {
+    max-width: 420px;
+    margin: 0 auto;
+    font-size: 0.82rem;
+    line-height: 1.7;
+  }
+
+  .treatments .treatment-cta .btn,
+  .treatments .treatment-cta a {
+    width: 100%;
+    max-width: 260px;
+    min-height: 48px;
+    margin: 0 auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .treatments .treatment-cta .btn:hover,
+  .treatments .treatment-cta a:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+}

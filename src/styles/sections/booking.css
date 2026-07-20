@@ -1,0 +1,615 @@
+.booking-background {
+  background: var(--background-color) !important;
+}
+
+.booking {
+  padding-top: 10rem;
+  padding-bottom: 2.5rem;
+  background: var(--background-color);
+}
+
+.booking .booking-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: stretch;
+  padding-top: 2.5rem;
+}
+
+.booking .booking-info,
+.booking .booking-form-wrapper {
+  border-radius: 15px;
+  background: var(--surface-color);
+  box-shadow: 0 15px 40px color-mix(in srgb, var(--accent-color), transparent 85%);
+}
+
+.booking .booking-info {
+  padding: 2.5rem;
+}
+
+.booking .booking-label {
+  display: inline-block;
+  margin-bottom: 1rem;
+  color: var(--accent-color);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+}
+
+.booking .booking-info h2 {
+  margin: 0 0 1rem;
+  color: var(--text-color);
+  font-size: 3rem;
+  line-height: 1.05;
+  font-weight: 600;
+}
+
+.booking .booking-info p {
+  margin: 0 0 2rem;
+  color: var(--muted-text-color);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.8;
+}
+
+.booking .booking-options {
+  display: grid;
+  gap: 1rem;
+}
+
+.booking .booking-option {
+  width: 100%;
+  padding: 1.2rem;
+  border: 1px solid color-mix(in srgb, var(--accent-color), transparent 65%);
+  border-radius: 15px;
+  background: transparent;
+  color: var(--text-color);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  text-align: left;
+  transition: 0.4s ease;
+}
+
+.booking .booking-option:hover,
+.booking .booking-option.active {
+  background: color-mix(in srgb, var(--accent-color), transparent 82%);
+  box-shadow: 0 15px 40px color-mix(in srgb, var(--accent-color), transparent 80%);
+}
+
+.booking .booking-option i {
+  color: var(--accent-color);
+  font-size: 1.4rem;
+}
+
+.booking .booking-option span {
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.booking .booking-message {
+  max-height: 0;
+  margin-top: 0;
+  padding: 0;
+  border-radius: 15px;
+  opacity: 0;
+  overflow: hidden;
+  transform: translateY(8px);
+  pointer-events: none;
+  transition:
+    opacity 0.35s ease,
+    transform 0.35s ease,
+    max-height 0.35s ease,
+    margin-top 0.35s ease,
+    padding 0.35s ease;
+  font-weight: 600;
+}
+
+.booking .booking-message.show {
+  max-height: 100px;
+  margin-top: 2rem;
+  padding: 1rem 1.2rem;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.booking .booking-message.success {
+  background-color: color-mix(in srgb, #2f9e44, transparent 88%);
+  color: #2f9e44;
+}
+
+.booking .booking-message.error {
+  background-color: color-mix(in srgb, #d9480f, transparent 88%);
+  color: #d9480f;
+}
+
+.booking .booking-message.sending {
+  background-color: color-mix(in srgb, var(--accent-color), transparent 88%);
+  color: var(--accent-color);
+}
+
+.booking .booking-form-card {
+  padding: 2.5rem;
+  border-radius: 15px;
+  background-color: var(--surface-color);
+  box-shadow: 0 15px 40px color-mix(in srgb, var(--accent-color), transparent 85%);
+}
+
+.booking .booking-form-card h4 {
+  margin-bottom: 2rem;
+  text-align: center;
+  font-size: 1.9rem;
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+.booking .booking-form .form-control,
+.booking .booking-form .form-select {
+  min-height: 54px;
+  padding: 0.85rem 1rem;
+  border-color: var(--background2-color);
+  border-radius: 15px;
+  background-color: var(--surface-color);
+  color: var(--muted-text-color);
+  font-size: 0.95rem;
+  box-shadow: none;
+  transition: 0.4s ease;
+}
+
+.booking .booking-form textarea.form-control {
+  min-height: 140px;
+  resize: none;
+}
+
+.booking .booking-type .form-control {
+  text-align: center;
+  font-weight: 600;
+}
+
+.booking .booking-form .form-control::placeholder {
+  color: var(--muted-text-color);
+}
+
+.booking .booking-form .form-control:hover,
+.booking .booking-form .form-select:hover {
+  border-color: var(--accent-color);
+}
+
+.booking .booking-form .form-control:focus,
+.booking .booking-form .form-select:focus {
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 0.22rem color-mix(in srgb, var(--accent-color), transparent 70%);
+  outline: none;
+}
+
+.booking .booking-time {
+  position: relative;
+}
+
+.booking .booking-time-toggle {
+  width: 100%;
+  min-height: 54px;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--background2-color);
+  border-radius: 15px;
+  background-color: var(--surface-color);
+  color: var(--muted-text-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: 0.4s ease;
+}
+
+.booking .booking-time-toggle:hover,
+.booking .booking-time-toggle.active {
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 0.22rem color-mix(in srgb, var(--accent-color), transparent 70%);
+}
+
+.booking .booking-time-toggle.has-value {
+  color: var(--muted-text-color);
+}
+
+.booking .booking-time-menu {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  width: 325px;
+  padding: 1rem;
+  border-radius: 15px;
+  background-color: var(--surface-color);
+  box-shadow: 0 15px 40px color-mix(in srgb, var(--accent-color), transparent 80%);
+  border: 1px solid var(--background2-color);
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.4s ease;
+  z-index: 70;
+}
+
+.booking .booking-time-menu.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.booking .booking-time-header {
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.booking .booking-time-header strong {
+  display: block;
+  color: var(--text-color);
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.booking .booking-time-header small {
+  color: var(--muted-text-color);
+  font-size: 0.72rem;
+}
+
+.booking .booking-time-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.55rem;
+}
+
+.booking .booking-time-grid button {
+  height: 38px;
+  border: 0;
+  border-radius: 15px;
+  background-color: transparent;
+  color: var(--text-color);
+  transition: 0.4s ease;
+}
+
+.booking .booking-time-grid button:hover {
+  color: var(--accent-color);
+  transform: translateY(-4px);
+  box-shadow: 0 15px 40px color-mix(in srgb, var(--accent-color), transparent 80%);
+}
+
+.booking .booking-time-grid button.unavailable {
+  opacity: 0.35;
+  filter: blur(0.5px);
+  pointer-events: none;
+}
+
+.booking .booking-time-grid button.selected {
+  background-color: transparent;
+  color: var(--text-color);
+  font-weight: 400;
+}
+
+.booking .booking-time-grid button.selected:hover {
+  color: var(--accent-color);
+  transform: translateY(-4px);
+  box-shadow: 0 15px 40px color-mix(in srgb, var(--accent-color), transparent 80%);
+}
+
+.booking .booking-form .booking-date {
+  position: relative;
+}
+
+.booking .booking-form .booking-date-toggle {
+  width: 100%;
+  min-height: 54px;
+  padding: 0.85rem 1rem;
+  border: 1px solid;
+  border-color: var(--background2-color);
+  border-radius: 15px;
+  background-color: var(--surface-color);
+  color: var(--muted-text-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: 0.4s ease;
+}
+
+.booking .booking-form .booking-date-toggle:hover {
+  border-color: var(--accent-color);
+}
+
+.booking .booking-form .booking-date-toggle.active {
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 0.22rem color-mix(in srgb, var(--accent-color), transparent 70%);
+}
+
+.booking .booking-form .booking-calendar {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  width: 325px;
+  padding: 1rem;
+  border-radius: 15px;
+  background-color: var(--surface-color);
+  box-shadow: 0 15px 40px color-mix(in srgb, var(--accent-color), transparent 80%);
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.4s ease;
+  z-index: 70;
+  border: 1px solid;
+  border-color: var(--background2-color);
+}
+
+.booking .booking-form .booking-calendar.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.booking .booking-calendar .booking-calendar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  color: var(--text-color);
+  font-weight: 400;
+}
+
+.booking .booking-calendar .booking-calendar-header button {
+  border: 0;
+  background: transparent;
+  color: var(--text-color);
+}
+
+.booking .booking-calendar .booking-calendar-days,
+.booking .booking-calendar .booking-calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.45rem;
+}
+
+.booking .booking-calendar .booking-calendar-grid {
+  transition: opacity 0.22s ease, transform 0.22s ease;
+}
+
+.booking .booking-calendar .booking-calendar-grid.fade-out-left {
+  opacity: 0;
+  transform: translateX(-12px);
+}
+
+.booking .booking-calendar .booking-calendar-grid.fade-out-right {
+  opacity: 0;
+  transform: translateX(12px);
+}
+
+.booking .booking-calendar .booking-calendar-days span {
+  text-align: center;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--muted-text-color);
+}
+
+.booking .booking-calendar .booking-calendar-grid button {
+  height: 38px;
+  border: 0;
+  border-radius: 15px;
+  background-color: transparent;
+  color: var(--text-color);
+  transition: 0.4s ease;
+}
+
+.booking .booking-calendar .booking-calendar-grid button:hover {
+  color: var(--accent-color);
+  transform: translateY(-4px);
+  box-shadow: 0 15px 40px color-mix(in srgb, var(--accent-color), transparent 80%);
+}
+
+.booking .booking-calendar .booking-calendar-header button.disabled {
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+.booking .booking-calendar .booking-calendar-grid button.empty {
+  pointer-events: none;
+  opacity: 0;
+}
+
+.booking .booking-calendar .booking-calendar-grid button.disabled {
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+.booking .booking-calendar .booking-calendar-grid button.booked {
+  opacity: 0.35;
+  filter: blur(0.5px);
+  pointer-events: none;
+}
+
+.booking .booking-calendar .booking-calendar-grid button.selected {
+  background-color: var(--accent-color);
+  color: var(--text-color);
+  font-weight: 600;
+}
+
+.booking .booking-form .booking-submit {
+  width: 100%;
+  min-height: 50px;
+  border: 0;
+  border-radius: 15px;
+  background-color: var(--accent-color);
+  color: var(--text-color);
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: 0.4s ease;
+  text-transform: uppercase;
+  letter-spacing: 1.3px;
+}
+
+.booking .booking-form .booking-submit:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 15px 40px color-mix(in srgb, var(--accent-color), transparent 80%);
+}
+
+@media (max-width: 1024px) {
+
+  .booking {
+    padding-top: 7.5rem;
+    padding-bottom: 2.5rem;
+  }
+
+  .booking .booking-content {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .booking .booking-info,
+  .booking .booking-form-card {
+    padding: 1.5rem;
+  }
+
+  .booking .booking-label {
+    display: block;
+    margin-bottom: 0.8rem;
+    text-align: center;
+    font-size: 0.72rem;
+    letter-spacing: 0.25em;
+  }
+
+  .booking .booking-info h2,
+  .booking .booking-form-card h4 {
+    text-align: center;
+    font-size: clamp(1.8rem, 6vw, 2.6rem);
+    line-height: 1.15;
+  }
+
+  .booking .booking-info p {
+    max-width: 520px;
+    margin: 1rem auto 1.8rem;
+    text-align: center;
+    font-size: 0.9rem;
+    line-height: 1.8;
+  }
+
+  .booking .booking-options {
+    gap: 0.9rem;
+  }
+
+  .booking .booking-option {
+    min-height: 58px;
+    padding: 0 1rem;
+  }
+
+  .booking .booking-option:hover {
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .booking .booking-option.active {
+    background: color-mix(in srgb, var(--accent-color), transparent 85%);
+    box-shadow: 0 15px 40px color-mix(in srgb, var(--accent-color), transparent 85%);
+  }
+
+  .booking .booking-option i {
+    font-size: 1.1rem;
+  }
+
+  .booking .booking-option span {
+    font-size: 0.85rem;
+  }
+
+  .booking .booking-form-card h4 {
+    margin-bottom: 1.5rem;
+  }
+
+  .booking .booking-form .row {
+    --bs-gutter-y: 0.85rem;
+  }
+
+  .booking .booking-form .form-control,
+  .booking .booking-form .form-select,
+  .booking .booking-date-toggle,
+  .booking .booking-time-toggle {
+    min-height: 52px;
+    padding: 0.85rem 1rem;
+    font-size: 0.85rem;
+    line-height: 1.4;
+  }
+
+  .booking .booking-form .form-control::placeholder {
+    font-size: 0.85rem;
+  }
+
+  .booking .booking-form .form-control:hover,
+  .booking .booking-form .form-select:hover,
+  .booking .booking-date-toggle:hover,
+  .booking .booking-time-toggle:hover {
+    border-color: var(--background2-color);
+    box-shadow: none;
+  }
+
+  .booking .booking-form .form-control:focus,
+  .booking .booking-form .form-select:focus,
+  .booking .booking-date-toggle.active,
+  .booking .booking-time-toggle.active {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 0.22rem color-mix(in srgb, var(--accent-color), transparent 70%);
+  }
+
+  .booking textarea.form-control {
+    min-height: 135px;
+  }
+
+  .booking .booking-form .booking-submit,
+  .booking .booking-submit {
+    min-height: 50px;
+    font-size: 0.85rem;
+  }
+
+  .booking .booking-form .booking-submit:hover,
+  .booking .booking-submit:hover {
+    transform: none !important;
+    box-shadow: none !important;
+  }
+
+  .booking .booking-calendar,
+  .booking .booking-time-menu {
+    left: 50% !important;
+    right: auto !important;
+    width: min(100%, 320px);
+    transform: translateX(-50%) translateY(10px) !important;
+    transform-origin: top center;
+  }
+
+  .booking .booking-calendar.show,
+  .booking .booking-time-menu.show {
+    transform: translateX(-50%) translateY(0) !important;
+  }
+
+  .booking .booking-calendar .booking-calendar-grid button:hover {
+    color: var(--text-color);
+    transform: none;
+    box-shadow: none;
+  }
+
+  .booking .booking-calendar .booking-calendar-grid button.selected {
+    background-color: var(--accent-color);
+    color: var(--text-color);
+  }
+
+  .booking .booking-time-grid button:hover {
+    background: transparent;
+    color: var(--text-color);
+  }
+
+  .booking .booking-time-grid button.disabled:hover {
+    color: color-mix(in srgb, var(--muted-text-color), transparent 45%);
+  }
+
+  .booking .booking-message {
+    font-size: 0.82rem;
+    line-height: 1.6;
+    text-align: center;
+  }
+
+  .booking .booking-message.show {
+    margin-top: 1.2rem;
+    padding: 0.9rem 1rem;
+    font-size: 0.82rem;
+    line-height: 1.6;
+    text-align: center;
+  }
+
+}
