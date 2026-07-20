@@ -15,9 +15,17 @@ const sora = Sora({
 });
 
 export const metadata: Metadata = {
-  title: "LumaDent Studio | Cosmetic Dentistry & Smile Design in Chelsea",
+  title:
+    "LumaDent Studio | Cosmetic Dentistry & Smile Design in Chelsea",
+
   description:
     "Premium cosmetic dentistry, veneers, Invisalign, teeth whitening and smile transformations from LumaDent Studio in Chelsea, London.",
+
+  icons: {
+    icon: "/images/icons/logo.png",
+    shortcut: "/images/icons/logo.png",
+    apple: "/images/icons/logo.png",
+  },
 };
 
 export default function RootLayout({
