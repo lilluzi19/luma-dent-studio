@@ -1,0 +1,22 @@
+@import "./abstracts/variables.css";
+@import "./abstracts/animations.css";
+
+@import "./base/global.css";
+
+@import "./components/preloader.css";
+@import "./components/section-heading.css";
+
+@import "./layout/header.css";
+@import "./layout/mobile-navigation.css";
+@import "./layout/footer.css";
+
+@import "./sections/hero.css";
+@import "./sections/services.css";
+@import "./sections/results.css";
+@import "./sections/why-choose-us.css";
+@import "./sections/reviews.css";
+@import "./sections/faq.css";
+@import "./sections/treatments.css";
+@import "./sections/booking.css";
+@import "./sections/contact.css";
+@import "./sections/policy.css";

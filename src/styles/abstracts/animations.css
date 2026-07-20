@@ -73,3 +73,13 @@
     transform: scale(0.8) rotate(35deg);
   }
 }
+
+@keyframes underlineFlow {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  100% {
+    background-position: 220% 50%;
+  }
+}

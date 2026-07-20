@@ -1,0 +1,235 @@
+html,
+body {
+  height: 100%;
+}
+
+html {
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent-color) transparent;
+  scroll-behavior: smooth;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  font-family: var(--font-body);
+}
+
+main {
+  flex: 1;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--accent-color), black 10%);
+  border-radius: 100px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  transition: background-color 0.4s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: color-mix(in srgb, var(--accent-color), black 25%);
+}
+
+html.theme-changing ::-webkit-scrollbar-thumb {
+  transition:
+    background-color 0.6s ease,
+    background 0.6s ease,
+    border-color 0.6s ease !important;
+}
+
+html.theme-changing body,
+html.theme-changing main,
+html.theme-changing header,
+html.theme-changing footer,
+html.theme-changing section,
+html.theme-changing .topbar,
+html.theme-changing .main-header,
+html.theme-changing .footer-top,
+html.theme-changing .footer-bottom,
+html.theme-changing .services,
+html.theme-changing .services .service-card,
+html.theme-changing .services .service-treatment-card,
+html.theme-changing .services .service-icon,
+html.theme-changing .services .service-card-link,
+html.theme-changing .section-heading-badge,
+html.theme-changing .results .results-before-label,
+html.theme-changing .results .results-after-label,
+html.theme-changing .results .results-handle,
+html.theme-changing .results .results-handle::after,
+html.theme-changing .results .results-handle i,
+html.theme-changing .why-choose-us .why-item,
+html.theme-changing .reviews .review-card,
+html.theme-changing .faq .faq-item,
+html.theme-changing .treatments-page .treatment-card,
+html.theme-changing .treatments-page .treatment-cta,
+html.theme-changing .booking .booking-info,
+html.theme-changing .booking .booking-form-card,
+html.theme-changing .booking .booking-option,
+html.theme-changing .booking .form-control,
+html.theme-changing .booking .booking-date-toggle,
+html.theme-changing .booking .booking-time-toggle,
+html.theme-changing .contact .contact-map,
+html.theme-changing .contact .info-box,
+html.theme-changing .contact .contact-form,
+html.theme-changing .contact .icon-box,
+html.theme-changing .contact .form-control,
+html.theme-changing .contact .contact-form-note,
+html.theme-changing .contact .btn-submit,
+html.theme-changing .contact .info-item,
+html.theme-changing .contact .contact-trust,
+html.theme-changing .policy-page .policy-card {
+  transition:
+    background 0.6s ease,
+    background-color 0.6s ease,
+    border-color 0.6s ease,
+    box-shadow 0.6s ease !important;
+}
+
+html.theme-changing h1,
+html.theme-changing h2,
+html.theme-changing h3,
+html.theme-changing h4,
+html.theme-changing h5,
+html.theme-changing h6,
+html.theme-changing p,
+html.theme-changing a,
+html.theme-changing span:not(.sun):not(.moon),
+html.theme-changing strong,
+html.theme-changing small,
+html.theme-changing li,
+html.theme-changing cite,
+html.theme-changing blockquote,
+html.theme-changing button,
+html.theme-changing input,
+html.theme-changing textarea,
+html.theme-changing label,
+html.theme-changing .services .service-card h3,
+html.theme-changing .services .service-card p,
+html.theme-changing .services .service-features li,
+html.theme-changing .services .service-features li::before,
+html.theme-changing .services .service-icon i,
+html.theme-changing .services .service-card-link,
+html.theme-changing .section-heading-badge i,
+html.theme-changing .section-heading-badge span,
+html.theme-changing .section-heading p,
+html.theme-changing .why-choose-us .why-item h3,
+html.theme-changing .reviews .review-author h4,
+html.theme-changing .treatments-page .treatment-card h3,
+html.theme-changing .treatments-page .treatment-cta h2,
+html.theme-changing .booking .booking-info h2,
+html.theme-changing .booking .booking-form-card h4,
+html.theme-changing .booking .booking-option span,
+html.theme-changing .booking .form-control,
+html.theme-changing .booking .form-control::placeholder,
+html.theme-changing .booking .booking-date-toggle,
+html.theme-changing .booking .booking-time-toggle,
+html.theme-changing .contact .info-box h3,
+html.theme-changing .contact .info-item h4,
+html.theme-changing .contact .contact-trust strong,
+html.theme-changing .contact .contact-form h3,
+html.theme-changing .contact .btn-submit,
+html.theme-changing .contact .form-control,
+html.theme-changing .contact .form-control::placeholder,
+html.theme-changing .policy-page .policy-card h2,
+html.theme-changing .policy-page .policy-card h3 {
+  transition:
+    color 0.6s ease,
+    background 0.6s ease,
+    background-color 0.6s ease,
+    border-color 0.6s ease !important;
+}
+
+html.theme-changing .faq .faq-question span {
+  transition: color 0.6s ease !important;
+}
+
+html.theme-changing .faq .faq-item.active .faq-question span,
+html.theme-changing .faq .faq-item:hover .faq-question span {
+  transition: none !important;
+}
+
+html.theme-changing *::before,
+html.theme-changing *::after {
+  transition:
+    background 0.6s ease,
+    background-color 0.6s ease,
+    border-color 0.6s ease,
+    box-shadow 0.6s ease,
+    color 0.6s ease,
+    opacity 0.6s ease !important;
+}
+
+html.theme-changing input::placeholder,
+html.theme-changing textarea::placeholder {
+  transition: color 0.6s ease !important;
+}
+
+html.theme-changing i {
+  transition: color 0.6s ease !important;
+}
+
+body.preloader-active {
+  overflow: hidden;
+  height: 100vh;
+  height: 100svh;
+  height: 100dvh;
+  touch-action: none;
+}
+
+html:has(body.preloader-active),
+html:has(body.preloader-active) body,
+body.preloader-active {
+  background-color: var(--background-color) !important;
+}
+
+body.preloader-active,
+body.preloader-active.index-page,
+body.preloader-active.index-page .main {
+  background-color: var(--background-color) !important;
+}
+
+@media (max-width: 1024px) {
+
+  html,
+  body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+    min-height: 100%;
+    scroll-behavior: smooth !important;
+  }
+
+  body:not(.preloader-active).index-page,
+  body:not(.preloader-active).index-page .main {
+    background-color: var(--nav-background-color);
+  }
+
+  main section[id] {
+    scroll-margin-top: 75px;
+  }
+
+  #hero {
+    scroll-margin-top: 0;
+  }
+
+  #contact {
+    scroll-margin-top: 75px;
+  }
+
+  [data-aos] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+}
