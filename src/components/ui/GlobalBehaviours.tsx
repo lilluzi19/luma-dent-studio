@@ -5,24 +5,70 @@ import AOS from "aos";
 
 export default function GlobalBehaviours() {
   useEffect(() => {
+    const initialPageHash = window.location.hash;
+
     const body = document.body;
     const header = document.querySelector<HTMLElement>("#header");
     const preloader = document.querySelector<HTMLElement>("#preloader");
+
     const heroVideo =
       document.querySelector<HTMLVideoElement>(".hero .hero-video");
-    const scrollIndicator =
+
+    const heroScrollIndicator =
       document.querySelector<HTMLElement>(
         ".hero .scroll-down-indicator",
       );
 
+    const mobileBurger =
+      document.querySelector<HTMLButtonElement>(
+        ".mobile-burger",
+      );
+
+    const mobileClose =
+      document.querySelector<HTMLButtonElement>(
+        ".mobile-nav-close",
+      );
+
+    const mobileDrawer =
+      document.querySelector<HTMLElement>(
+        ".mobile-nav-drawer",
+      );
+
     let preloaderHideTimer: number | undefined;
     let preloaderRemoveTimer: number | undefined;
-    let fallbackTimer: number | undefined;
+    let preloaderFallbackTimer: number | undefined;
+    let scrollAnimationFrame: number | undefined;
 
-    const initialiseAOS = () => {
-      const isMobileOrTablet = window.matchMedia(
-        "(max-width: 1024px)",
-      ).matches;
+    /*
+     * Hero video mobile fix
+     */
+    const heroVideoMobileFix = () => {
+      if (!heroVideo) return;
+
+      heroVideo.muted = true;
+      heroVideo.defaultMuted = true;
+      heroVideo.autoplay = true;
+      heroVideo.loop = true;
+      heroVideo.playsInline = true;
+
+      heroVideo.removeAttribute("controls");
+      heroVideo.setAttribute("muted", "");
+      heroVideo.setAttribute("autoplay", "");
+      heroVideo.setAttribute("playsinline", "");
+      heroVideo.setAttribute("webkit-playsinline", "");
+
+      const playPromise = heroVideo.play();
+
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {});
+      }
+    };
+
+    /*
+     * AOS
+     */
+    const aosInit = () => {
+      const isMobileOrTablet = window.innerWidth <= 1024;
 
       if (isMobileOrTablet) {
         body.classList.add("aos-disabled-mobile");
@@ -46,24 +92,44 @@ export default function GlobalBehaviours() {
         offset: 80,
       });
 
-      window.requestAnimationFrame(() => {
-        AOS.refreshHard();
-      });
+      AOS.refreshHard();
     };
 
+    /*
+     * Preloader
+     */
     const runPreloader = () => {
-      if (body.dataset.preloaderFinished === "true") {
-        initialiseAOS();
+      if (body.dataset.preloaderHasRun === "true") {
         return;
       }
 
-      body.dataset.preloaderFinished = "true";
+      body.dataset.preloaderHasRun = "true";
+
+      if (initialPageHash) {
+        const target =
+          document.querySelector<HTMLElement>(
+            initialPageHash,
+          );
+
+        if (target) {
+          window.scrollTo({
+            top: target.offsetTop - 60,
+            behavior: "instant",
+          });
+
+          history.replaceState(
+            null,
+            "",
+            window.location.pathname,
+          );
+        }
+      }
 
       preloaderHideTimer = window.setTimeout(() => {
         preloader?.classList.add("hide");
         body.classList.remove("preloader-active");
 
-        initialiseAOS();
+        aosInit();
       }, 1300);
 
       preloaderRemoveTimer = window.setTimeout(() => {
@@ -71,6 +137,221 @@ export default function GlobalBehaviours() {
       }, 3600);
     };
 
+    /*
+     * Scroll restoration
+     */
+    const handleInitialPageLoad = () => {
+      if ("scrollRestoration" in history) {
+        history.scrollRestoration = "manual";
+      }
+
+      if (initialPageHash) {
+        return;
+      }
+
+      window.setTimeout(() => {
+        window.scrollTo({
+          top: 0,
+          behavior: "instant",
+        });
+      }, 10);
+    };
+
+    /*
+     * Desktop smooth scrolling
+     */
+    const getDesktopOffset = (targetId: string) => {
+      if (targetId === "#hero") {
+        return 125;
+      }
+
+      return 60;
+    };
+
+    const smoothScrollDesktop = (
+      target: HTMLElement,
+      targetId: string,
+    ) => {
+      const offset = getDesktopOffset(targetId);
+      const start = window.pageYOffset;
+
+      const end =
+        target.getBoundingClientRect().top +
+        window.pageYOffset -
+        offset;
+
+      const duration = 1000;
+      let startTime: number | null = null;
+
+      const animate = (currentTime: number) => {
+        if (startTime === null) {
+          startTime = currentTime;
+        }
+
+        const timeElapsed = currentTime - startTime;
+        const progress = Math.min(
+          timeElapsed / duration,
+          1,
+        );
+
+        const ease =
+          progress < 0.5
+            ? 4 * progress * progress * progress
+            : 1 -
+              Math.pow(-2 * progress + 2, 3) / 2;
+
+        window.scrollTo(
+          0,
+          start + (end - start) * ease,
+        );
+
+        if (timeElapsed < duration) {
+          scrollAnimationFrame =
+            window.requestAnimationFrame(animate);
+        }
+      };
+
+      scrollAnimationFrame =
+        window.requestAnimationFrame(animate);
+    };
+
+    /*
+     * Mobile/tablet smooth scrolling
+     */
+    const isMobileOrTablet = () =>
+      window.matchMedia(
+        "(max-width: 1024px)",
+      ).matches;
+
+    const getMobileOffset = (targetId: string) => {
+      if (targetId === "#hero") {
+        return 0;
+      }
+
+      return 75;
+    };
+
+    const smoothScrollMobile = (
+      target: HTMLElement,
+      targetId: string,
+    ) => {
+      const offset = getMobileOffset(targetId);
+
+      const start =
+        window.pageYOffset ||
+        document.documentElement.scrollTop ||
+        document.body.scrollTop ||
+        0;
+
+      const end =
+        target.getBoundingClientRect().top +
+        start -
+        offset;
+
+      const distance = end - start;
+      const duration = 550;
+
+      let startTime: number | null = null;
+
+      const animate = (currentTime: number) => {
+        if (startTime === null) {
+          startTime = currentTime;
+        }
+
+        const elapsed = currentTime - startTime;
+
+        const progress = Math.min(
+          elapsed / duration,
+          1,
+        );
+
+        const ease =
+          1 - Math.pow(1 - progress, 3);
+
+        const nextPosition =
+          start + distance * ease;
+
+        window.scrollTo(0, nextPosition);
+        document.documentElement.scrollTop =
+          nextPosition;
+        document.body.scrollTop = nextPosition;
+
+        if (progress < 1) {
+          scrollAnimationFrame =
+            window.requestAnimationFrame(animate);
+        }
+      };
+
+      scrollAnimationFrame =
+        window.requestAnimationFrame(animate);
+    };
+
+    /*
+     * Handle anchor navigation
+     */
+    const handleAnchorNavigation = (
+      event: MouseEvent,
+    ) => {
+      const clickedElement =
+        event.target as HTMLElement;
+
+      const link =
+        clickedElement.closest<HTMLAnchorElement>(
+          'a[href^="#"]',
+        );
+
+      if (!link) return;
+
+      const targetId = link.getAttribute("href");
+
+      if (
+        !targetId ||
+        targetId === "#" ||
+        !targetId.startsWith("#")
+      ) {
+        return;
+      }
+
+      const target =
+        document.querySelector<HTMLElement>(
+          targetId,
+        );
+
+      if (!target) return;
+
+      event.preventDefault();
+
+      if (scrollAnimationFrame) {
+        window.cancelAnimationFrame(
+          scrollAnimationFrame,
+        );
+      }
+
+      body.classList.remove(
+        "mobile-nav-active",
+      );
+
+      mobileBurger?.setAttribute(
+        "aria-expanded",
+        "false",
+      );
+
+      if (isMobileOrTablet()) {
+        smoothScrollMobile(target, targetId);
+      } else {
+        smoothScrollDesktop(target, targetId);
+      }
+
+      history.replaceState(
+        null,
+        "",
+        window.location.pathname,
+      );
+    };
+
+    /*
+     * Header shrinking
+     */
     const updateHeaderState = () => {
       if (!header) return;
 
@@ -80,121 +361,116 @@ export default function GlobalBehaviours() {
       );
     };
 
-    const updateScrollIndicator = () => {
-      if (!scrollIndicator) return;
+    /*
+     * Hero scroll indicator
+     */
+    const updateHeroScrollIndicator = () => {
+      if (!heroScrollIndicator) return;
 
-      scrollIndicator.classList.toggle(
+      heroScrollIndicator.classList.toggle(
         "scroll-hidden",
         window.scrollY > 50,
       );
     };
 
-    const playHeroVideo = () => {
-      if (!heroVideo) return;
-
-      heroVideo.muted = true;
-      heroVideo.defaultMuted = true;
-      heroVideo.autoplay = true;
-      heroVideo.loop = true;
-      heroVideo.playsInline = true;
-
-      heroVideo.removeAttribute("controls");
-      heroVideo.setAttribute("muted", "");
-      heroVideo.setAttribute("autoplay", "");
-      heroVideo.setAttribute("playsinline", "");
-      heroVideo.setAttribute("webkit-playsinline", "");
-
-      const playPromise = heroVideo.play();
-
-      if (playPromise) {
-        playPromise.catch(() => {});
-      }
-    };
-
+    /*
+     * Magnetic desktop navigation
+     */
     const magneticLinks = Array.from(
       document.querySelectorAll<HTMLAnchorElement>(
         ".header .navmenu a",
       ),
     );
 
-    const magneticHandlers = magneticLinks.map((link) => {
-      const handleMouseMove = (event: MouseEvent) => {
-        if (window.innerWidth <= 992) return;
+    const magneticHandlers = magneticLinks.map(
+      (link) => {
+        const handleMouseMove = (
+          event: MouseEvent,
+        ) => {
+          if (window.innerWidth <= 992) return;
 
-        const rect = link.getBoundingClientRect();
-        const x =
-          event.clientX - rect.left - rect.width / 2;
-        const y =
-          event.clientY - rect.top - rect.height / 2;
+          const rect =
+            link.getBoundingClientRect();
 
-        link.style.transition =
-          "color 0.4s ease, transform 0.25s ease-out";
+          const x =
+            event.clientX -
+            rect.left -
+            rect.width / 2;
 
-        link.style.transform = `translate(${x * 0.15}px, ${
-          y * 0.15
-        }px)`;
-      };
+          const y =
+            event.clientY -
+            rect.top -
+            rect.height / 2;
 
-      const handleMouseLeave = () => {
-        link.style.transition =
-          "color 0.4s ease, transform 0.35s ease";
+          link.style.transition =
+            "color 0.4s ease, transform 0.25s ease-out";
 
-        link.style.transform = "translate(0, 0)";
-      };
+          link.style.transform =
+            `translate(${x * 0.15}px, ${
+              y * 0.15
+            }px)`;
+        };
 
-      link.addEventListener("mousemove", handleMouseMove);
-      link.addEventListener("mouseleave", handleMouseLeave);
+        const handleMouseLeave = () => {
+          link.style.transition =
+            "color 0.4s ease, transform 0.35s ease";
 
-      return {
-        link,
-        handleMouseMove,
-        handleMouseLeave,
-      };
-    });
+          link.style.transform =
+            "translate(0, 0)";
+        };
 
-    const mobileBurger =
-      document.querySelector<HTMLButtonElement>(
-        ".mobile-burger",
-      );
+        link.addEventListener(
+          "mousemove",
+          handleMouseMove,
+        );
 
-    const mobileClose =
-      document.querySelector<HTMLButtonElement>(
-        ".mobile-nav-close",
-      );
+        link.addEventListener(
+          "mouseleave",
+          handleMouseLeave,
+        );
 
-    const mobileDrawer =
-      document.querySelector<HTMLElement>(
-        ".mobile-nav-drawer",
-      );
+        return {
+          link,
+          handleMouseMove,
+          handleMouseLeave,
+        };
+      },
+    );
 
+    /*
+     * Mobile navigation
+     */
     const openMobileNavigation = (
       event: MouseEvent,
     ) => {
       event.stopPropagation();
 
-      body.classList.add("mobile-nav-active");
+      body.classList.add(
+        "mobile-nav-active",
+      );
+
       mobileBurger?.setAttribute(
         "aria-expanded",
         "true",
       );
     };
 
-    const closeMobileNavigation = () => {
-      body.classList.remove("mobile-nav-active");
+    const closeMobileNavigation = (
+      event?: MouseEvent,
+    ) => {
+      event?.stopPropagation();
+
+      body.classList.remove(
+        "mobile-nav-active",
+      );
+
       mobileBurger?.setAttribute(
         "aria-expanded",
         "false",
       );
     };
 
-    const handleCloseButton = (
-      event: MouseEvent,
-    ) => {
-      event.stopPropagation();
-      closeMobileNavigation();
-    };
-
-    const handleDocumentClick = (
+    const handleOutsideMobileClick = (
       event: MouseEvent,
     ) => {
       if (
@@ -207,26 +483,177 @@ export default function GlobalBehaviours() {
 
       const target = event.target as Node;
 
-      if (mobileDrawer?.contains(target)) return;
-      if (mobileBurger?.contains(target)) return;
+      if (mobileDrawer?.contains(target)) {
+        return;
+      }
+
+      if (mobileBurger?.contains(target)) {
+        return;
+      }
 
       closeMobileNavigation();
     };
 
-    const handleMobileLinkClick = (
-      event: Event,
+    /*
+     * Active navigation scroll-spy
+     */
+    const scrollSpySections = Array.from(
+      document.querySelectorAll<HTMLElement>(
+        "#services, #results, #reviews, #faq",
+      ),
+    );
+
+    const navLinks = Array.from(
+      document.querySelectorAll<HTMLAnchorElement>(
+        ".header .navmenu a, .mobile-nav-drawer a",
+      ),
+    );
+
+    const normalizePage = (
+      value: string | null,
     ) => {
-      const target = event.target as HTMLElement;
-      const link = target.closest("a");
+      if (!value) return "index";
 
-      if (!link) return;
+      let page = value.split("#")[0];
 
-      closeMobileNavigation();
+      page = page.substring(
+        page.lastIndexOf("/") + 1,
+      );
+
+      page = page.replace(".html", "");
+
+      return page || "index";
     };
 
+    const clearActiveNavLinks = () => {
+      navLinks.forEach((link) => {
+        link.classList.remove("active");
+      });
+    };
+
+    const setActiveNavByHash = (
+      hash: string,
+    ) => {
+      if (!hash) return false;
+
+      let matched = false;
+
+      navLinks.forEach((link) => {
+        const href =
+          link.getAttribute("href");
+
+        if (!href) return;
+
+        if (
+          href === hash ||
+          href.endsWith(hash)
+        ) {
+          link.classList.add("active");
+          matched = true;
+        }
+      });
+
+      return matched;
+    };
+
+    const updateActiveNavLink = () => {
+      const currentPage = normalizePage(
+        window.location.pathname,
+      );
+
+      clearActiveNavLinks();
+
+      if (
+        body.classList.contains("index-page")
+      ) {
+        let currentSection = "";
+
+        scrollSpySections.forEach(
+          (section) => {
+            const sectionTop =
+              section.offsetTop - 150;
+
+            const sectionBottom =
+              sectionTop +
+              section.offsetHeight;
+
+            if (
+              window.scrollY >= sectionTop &&
+              window.scrollY < sectionBottom
+            ) {
+              currentSection =
+                section.getAttribute("id") || "";
+            }
+          },
+        );
+
+        if (currentSection) {
+          setActiveNavByHash(
+            `#${currentSection}`,
+          );
+        }
+
+        return;
+      }
+
+      navLinks.forEach((link) => {
+        const href =
+          link.getAttribute("href");
+
+        if (!href) return;
+
+        const linkPage =
+          normalizePage(href);
+
+        if (linkPage === currentPage) {
+          link.classList.add("active");
+        }
+      });
+    };
+
+    /*
+     * Initial setup
+     */
+    heroVideoMobileFix();
     updateHeaderState();
-    updateScrollIndicator();
-    playHeroVideo();
+    updateHeroScrollIndicator();
+    updateActiveNavLink();
+
+    if (document.readyState === "complete") {
+      handleInitialPageLoad();
+      runPreloader();
+    }
+
+    /*
+     * Event listeners
+     */
+    window.addEventListener(
+      "load",
+      handleInitialPageLoad,
+      { once: true },
+    );
+
+    window.addEventListener(
+      "load",
+      runPreloader,
+      { once: true },
+    );
+
+    window.addEventListener(
+      "load",
+      heroVideoMobileFix,
+    );
+
+    window.addEventListener(
+      "pageshow",
+      heroVideoMobileFix,
+    );
+
+    window.addEventListener(
+      "touchstart",
+      heroVideoMobileFix,
+      { once: true },
+    );
 
     window.addEventListener(
       "scroll",
@@ -236,30 +663,29 @@ export default function GlobalBehaviours() {
 
     window.addEventListener(
       "scroll",
-      updateScrollIndicator,
+      updateHeroScrollIndicator,
       { passive: true },
     );
 
     window.addEventListener(
-      "load",
-      runPreloader,
-      { once: true },
+      "scroll",
+      updateActiveNavLink,
+      { passive: true },
     );
 
     window.addEventListener(
-      "load",
-      playHeroVideo,
+      "hashchange",
+      updateActiveNavLink,
     );
 
-    window.addEventListener(
-      "pageshow",
-      playHeroVideo,
+    document.addEventListener(
+      "click",
+      handleAnchorNavigation,
     );
 
-    window.addEventListener(
-      "touchstart",
-      playHeroVideo,
-      { once: true },
+    document.addEventListener(
+      "click",
+      handleOutsideMobileClick,
     );
 
     mobileBurger?.addEventListener(
@@ -269,37 +695,19 @@ export default function GlobalBehaviours() {
 
     mobileClose?.addEventListener(
       "click",
-      handleCloseButton,
+      closeMobileNavigation,
     );
 
-    mobileDrawer?.addEventListener(
-      "click",
-      handleMobileLinkClick,
-    );
-
-    document.addEventListener(
-      "click",
-      handleDocumentClick,
-    );
-
-    if (document.readyState === "complete") {
-      runPreloader();
-    }
-
-    fallbackTimer = window.setTimeout(
-      runPreloader,
-      5000,
-    );
+    preloaderFallbackTimer =
+      window.setTimeout(
+        runPreloader,
+        5000,
+      );
 
     return () => {
       window.removeEventListener(
-        "scroll",
-        updateHeaderState,
-      );
-
-      window.removeEventListener(
-        "scroll",
-        updateScrollIndicator,
+        "load",
+        handleInitialPageLoad,
       );
 
       window.removeEventListener(
@@ -309,17 +717,47 @@ export default function GlobalBehaviours() {
 
       window.removeEventListener(
         "load",
-        playHeroVideo,
+        heroVideoMobileFix,
       );
 
       window.removeEventListener(
         "pageshow",
-        playHeroVideo,
+        heroVideoMobileFix,
       );
 
       window.removeEventListener(
         "touchstart",
-        playHeroVideo,
+        heroVideoMobileFix,
+      );
+
+      window.removeEventListener(
+        "scroll",
+        updateHeaderState,
+      );
+
+      window.removeEventListener(
+        "scroll",
+        updateHeroScrollIndicator,
+      );
+
+      window.removeEventListener(
+        "scroll",
+        updateActiveNavLink,
+      );
+
+      window.removeEventListener(
+        "hashchange",
+        updateActiveNavLink,
+      );
+
+      document.removeEventListener(
+        "click",
+        handleAnchorNavigation,
+      );
+
+      document.removeEventListener(
+        "click",
+        handleOutsideMobileClick,
       );
 
       mobileBurger?.removeEventListener(
@@ -329,17 +767,7 @@ export default function GlobalBehaviours() {
 
       mobileClose?.removeEventListener(
         "click",
-        handleCloseButton,
-      );
-
-      mobileDrawer?.removeEventListener(
-        "click",
-        handleMobileLinkClick,
-      );
-
-      document.removeEventListener(
-        "click",
-        handleDocumentClick,
+        closeMobileNavigation,
       );
 
       magneticHandlers.forEach(
@@ -360,16 +788,28 @@ export default function GlobalBehaviours() {
         },
       );
 
+      if (scrollAnimationFrame) {
+        window.cancelAnimationFrame(
+          scrollAnimationFrame,
+        );
+      }
+
       if (preloaderHideTimer) {
-        window.clearTimeout(preloaderHideTimer);
+        window.clearTimeout(
+          preloaderHideTimer,
+        );
       }
 
       if (preloaderRemoveTimer) {
-        window.clearTimeout(preloaderRemoveTimer);
+        window.clearTimeout(
+          preloaderRemoveTimer,
+        );
       }
 
-      if (fallbackTimer) {
-        window.clearTimeout(fallbackTimer);
+      if (preloaderFallbackTimer) {
+        window.clearTimeout(
+          preloaderFallbackTimer,
+        );
       }
     };
   }, []);
