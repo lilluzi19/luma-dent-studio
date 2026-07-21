@@ -2,7 +2,11 @@
 
 import { useEffect, useRef } from "react";
 import Swiper from "swiper";
-import { Navigation, Pagination } from "swiper/modules";
+import {
+  Autoplay,
+  Navigation,
+  Pagination,
+} from "swiper/modules";
 import SectionHeading from "@/components/ui/SectionHeading";
 
 export default function Reviews() {
@@ -12,26 +16,40 @@ export default function Reviews() {
     if (!sliderRef.current) return;
 
     const swiper = new Swiper(sliderRef.current, {
-      modules: [Navigation, Pagination],
-      slidesPerView: 1,
-      spaceBetween: 24,
-      speed: 700,
+      modules: [
+        Autoplay,
+        Navigation,
+        Pagination,
+      ],
+
       loop: true,
-      navigation: {
-        prevEl: ".reviews-prev",
-        nextEl: ".reviews-next",
-      },
-      pagination: {
-        el: ".reviews-pagination",
-        clickable: true,
-      },
+      speed: 750,
+      spaceBetween: 24,
+      slidesPerView: 1,
+
       breakpoints: {
         768: {
           slidesPerView: 2,
         },
-        1200: {
+
+        1025: {
           slidesPerView: 3,
         },
+      },
+
+      autoplay: {
+        delay: 3500,
+        disableOnInteraction: false,
+      },
+
+      navigation: {
+        nextEl: ".reviews .reviews-next",
+        prevEl: ".reviews .reviews-prev",
+      },
+
+      pagination: {
+        el: ".reviews .reviews-pagination",
+        clickable: true,
       },
     });
 

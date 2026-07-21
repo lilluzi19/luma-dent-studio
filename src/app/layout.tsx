@@ -59,7 +59,7 @@ export default function RootLayout({
         />
       </head>
 
-      <body className={`${sora.variable} index-page preloader-active`}>
+      <body className={`${sora.variable} preloader-active`}>
         {children}
       </body>
     </html>

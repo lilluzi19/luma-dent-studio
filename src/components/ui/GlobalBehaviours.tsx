@@ -563,9 +563,11 @@ export default function GlobalBehaviours() {
 
       clearActiveNavLinks();
 
-      if (
-        body.classList.contains("index-page")
-      ) {
+      const isIndexPage =
+        window.location.pathname === "/" ||
+        window.location.pathname === "/index.html";
+
+      if (isIndexPage) {
         let currentSection = "";
 
         scrollSpySections.forEach(
