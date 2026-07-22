@@ -7,6 +7,9 @@ import MobileNavigation from "@/components/layout/MobileNavigation";
 import BookingPage from "@/components/sections/BookingPage";
 
 import GlobalBehaviours from "@/components/ui/GlobalBehaviours";
+
+import BookingBehaviours from "@/components/ui/BookingBehaviours";
+
 import Preloader from "@/components/ui/Preloader";
 
 export const metadata: Metadata = {
@@ -55,6 +58,8 @@ export default function Booking() {
   return (
     <>
       <GlobalBehaviours />
+
+      <BookingBehaviours />
 
       <Preloader />
 
