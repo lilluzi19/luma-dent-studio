@@ -409,62 +409,6 @@ export default function GlobalBehaviours() {
         window.location.pathname,
       );
     };
-      const clickedElement =
-        event.target as HTMLElement;
-
-      const link =
-        clickedElement.closest<HTMLAnchorElement>(
-          'a[href^="#"]',
-        );
-
-      if (!link) return;
-
-      const targetId = link.getAttribute("href");
-
-      if (
-        !targetId ||
-        targetId === "#" ||
-        !targetId.startsWith("#")
-      ) {
-        return;
-      }
-
-      const target =
-        document.querySelector<HTMLElement>(
-          targetId,
-        );
-
-      if (!target) return;
-
-      event.preventDefault();
-
-      if (scrollAnimationFrame) {
-        window.cancelAnimationFrame(
-          scrollAnimationFrame,
-        );
-      }
-
-      body.classList.remove(
-        "mobile-nav-active",
-      );
-
-      mobileBurger?.setAttribute(
-        "aria-expanded",
-        "false",
-      );
-
-      if (isMobileOrTablet()) {
-        smoothScrollMobile(target, targetId);
-      } else {
-        smoothScrollDesktop(target, targetId);
-      }
-
-      history.replaceState(
-        null,
-        "",
-        window.location.pathname,
-      );
-    };
 
     /*
      * Header shrinking
@@ -731,8 +675,17 @@ export default function GlobalBehaviours() {
     };
 
     /*
-     * Initial setup
-     */
+ * Initial setup
+ */
+    body.classList.remove(
+      "mobile-nav-active",
+    );
+
+    mobileBurger?.setAttribute(
+      "aria-expanded",
+      "false",
+    );
+
     heroVideoMobileFix();
     updateHeaderState();
     updateHeroScrollIndicator();
@@ -824,8 +777,16 @@ export default function GlobalBehaviours() {
       );
 
     return () => {
-
       delete body.dataset.preloaderHasRun;
+
+      body.classList.remove(
+        "mobile-nav-active",
+      );
+
+      mobileBurger?.setAttribute(
+        "aria-expanded",
+        "false",
+      );
 
       window.removeEventListener(
         "load",
