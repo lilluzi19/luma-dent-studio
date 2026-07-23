@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://yourdomain.com";
+  const baseUrl = "https://luma-dent-studio.vercel.app/";
 
   return [
     {

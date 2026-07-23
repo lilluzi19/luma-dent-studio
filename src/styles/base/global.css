@@ -62,8 +62,6 @@ html.theme-changing .services .service-treatment-card,
 html.theme-changing .services .service-icon,
 html.theme-changing .services .service-card-link,
 html.theme-changing .section-heading-badge,
-html.theme-changing .results .results-before-label,
-html.theme-changing .results .results-after-label,
 html.theme-changing .results .results-handle,
 html.theme-changing .results .results-handle::after,
 html.theme-changing .results .results-handle i,
@@ -150,7 +148,7 @@ html.theme-changing .policy-page .policy-card h3 {
 }
 
 html.theme-changing .faq .faq-question span {
-  transition: color 0.6s ease !important;
+  transition: color 0.2s ease !important;
 }
 
 html.theme-changing .faq .faq-item.active .faq-question span,
