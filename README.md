@@ -7,11 +7,13 @@
 <h2>Tech Stack</h2>
 
 <ul>
-  <li>Next.js (App Router).</li>
-  <li>React.</li>
+  <li>HTML5.</li>
+  <li>CSS3.</li>
   <li>TypeScript.</li>
-  <li>CSS.</li>
+  <li>React.</li>
+  <li>Next.js.</li>
   <li>Bootstrap.</li>
+  <li>Git & Github.</li>
   <li>Figma.</li>
   <li>Visual Studio Code.</li>
 </ul>
@@ -46,12 +48,12 @@
 <h2>Project Structure</h2>
 
 <p>
-  src/
-    app/
-      booking
-      contact
-      cookie
-      privacy
+  src/ <br>
+    app/ <br>
+      booking <br>
+      contact <br>
+      cookie <br>
+      privacy <br>
       terms 
       treatments
     components/
