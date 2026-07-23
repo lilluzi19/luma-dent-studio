@@ -35,7 +35,6 @@ export default function GlobalBehaviours() {
       );
 
     let preloaderHideTimer: number | undefined;
-    let preloaderRemoveTimer: number | undefined;
     let preloaderFallbackTimer: number | undefined;
     let scrollAnimationFrame: number | undefined;
 
@@ -105,6 +104,9 @@ export default function GlobalBehaviours() {
 
       body.dataset.preloaderHasRun = "true";
 
+      body.classList.add("preloader-active");
+      preloader?.classList.remove("hide");
+
       if (initialPageHash) {
         const target =
           document.querySelector<HTMLElement>(
@@ -131,10 +133,6 @@ export default function GlobalBehaviours() {
 
         aosInit();
       }, 1300);
-
-      preloaderRemoveTimer = window.setTimeout(() => {
-        preloader?.remove();
-      }, 3600);
     };
 
     /*
@@ -289,9 +287,128 @@ export default function GlobalBehaviours() {
     /*
      * Handle anchor navigation
      */
-    const handleAnchorNavigation = (
+   const handleAnchorNavigation = (
       event: MouseEvent,
     ) => {
+      const clickedElement =
+        event.target as HTMLElement;
+
+      const link =
+        clickedElement.closest<HTMLAnchorElement>(
+          "a[href]",
+        );
+
+      if (!link) return;
+
+      const rawHref = link.getAttribute("href");
+
+      if (
+        !rawHref ||
+        rawHref === "#" ||
+        rawHref.startsWith("mailto:") ||
+        rawHref.startsWith("tel:")
+      ) {
+        return;
+      }
+
+      let destinationUrl: URL;
+
+      try {
+        destinationUrl = new URL(
+          rawHref,
+          window.location.href,
+        );
+      } catch {
+        return;
+      }
+
+      const targetId = destinationUrl.hash;
+
+      if (!targetId) return;
+
+      const isSameOrigin =
+        destinationUrl.origin ===
+        window.location.origin;
+
+      if (!isSameOrigin) return;
+
+      const currentPath =
+        window.location.pathname;
+
+      const destinationPath =
+        destinationUrl.pathname;
+
+      const isCurrentPageHomepage =
+        currentPath === "/" ||
+        currentPath === "/index.html";
+
+      const isDestinationHomepage =
+        destinationPath === "/" ||
+        destinationPath === "/index.html";
+
+      /*
+      * When we are not currently on the homepage,
+      * allow /#section to navigate normally.
+      *
+      * The homepage preloader will then read the
+      * hash and position the page before revealing it.
+      */
+      if (
+        !isCurrentPageHomepage ||
+        !isDestinationHomepage
+      ) {
+        body.classList.remove(
+          "mobile-nav-active",
+        );
+
+        mobileBurger?.setAttribute(
+          "aria-expanded",
+          "false",
+        );
+
+        return;
+      }
+
+      /*
+      * We are already on the homepage, so use the
+      * existing custom smooth-scroll behaviour.
+      */
+      const target =
+        document.querySelector<HTMLElement>(
+          targetId,
+        );
+
+      if (!target) return;
+
+      event.preventDefault();
+
+      if (scrollAnimationFrame) {
+        window.cancelAnimationFrame(
+          scrollAnimationFrame,
+        );
+      }
+
+      body.classList.remove(
+        "mobile-nav-active",
+      );
+
+      mobileBurger?.setAttribute(
+        "aria-expanded",
+        "false",
+      );
+
+      if (isMobileOrTablet()) {
+        smoothScrollMobile(target, targetId);
+      } else {
+        smoothScrollDesktop(target, targetId);
+      }
+
+      history.replaceState(
+        null,
+        "",
+        window.location.pathname,
+      );
+    };
       const clickedElement =
         event.target as HTMLElement;
 
@@ -707,6 +824,9 @@ export default function GlobalBehaviours() {
       );
 
     return () => {
+
+      delete body.dataset.preloaderHasRun;
+
       window.removeEventListener(
         "load",
         handleInitialPageLoad,
@@ -799,12 +919,6 @@ export default function GlobalBehaviours() {
       if (preloaderHideTimer) {
         window.clearTimeout(
           preloaderHideTimer,
-        );
-      }
-
-      if (preloaderRemoveTimer) {
-        window.clearTimeout(
-          preloaderRemoveTimer,
         );
       }
 

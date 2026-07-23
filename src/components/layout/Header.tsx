@@ -53,7 +53,7 @@ export default function Header() {
           </button>
 
           <a
-            href="#hero"
+            href="/#hero"
             className="logo"
             id="logo"
             aria-label="LumaDent Studio Home"
@@ -74,19 +74,19 @@ export default function Header() {
           <nav id="navmenu" className="navmenu">
             <ul>
               <li>
-                <a href="#services">Services</a>
+                <a href="/#services">Services</a>
               </li>
 
               <li>
-                <a href="#results">Results</a>
+                <a href="/#results">Results</a>
               </li>
 
               <li>
-                <a href="#reviews">Reviews</a>
+                <a href="/#reviews">Reviews</a>
               </li>
 
               <li>
-                <a href="#faq">FAQ</a>
+                <a href="/#faq">FAQ</a>
               </li>
 
               <li>

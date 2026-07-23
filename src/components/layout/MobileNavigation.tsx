@@ -23,19 +23,19 @@ export default function MobileNavigation() {
 
       <ul>
         <li>
-          <a href="#services">Services</a>
+          <a href="/#services">Services</a>
         </li>
 
         <li>
-          <a href="#results">Results</a>
+          <a href="/#results">Results</a>
         </li>
 
         <li>
-          <a href="#reviews">Reviews</a>
+          <a href="/#reviews">Reviews</a>
         </li>
 
         <li>
-          <a href="#faq">FAQ</a>
+          <a href="/#faq">FAQ</a>
         </li>
 
         <li>

@@ -7,7 +7,7 @@ export default function Footer() {
         <div className="container">
           <div className="footer-content">
             <div className="footer-brand">
-              <a href="#hero" className="footer-logo">
+              <a href="/#hero" className="footer-logo">
                 <img
                   src="/images/icons/logo.webp"
                   alt="LumaDent Studio Logo"
@@ -49,19 +49,19 @@ export default function Footer() {
 
               <ul>
                 <li>
-                  <a href="#services">Services</a>
+                  <a href="/#services">Services</a>
                 </li>
 
                 <li>
-                  <a href="#results">Results</a>
+                  <a href="/#results">Results</a>
                 </li>
 
                 <li>
-                  <a href="#reviews">Reviews</a>
+                  <a href="/#reviews">Reviews</a>
                 </li>
 
                 <li>
-                  <a href="#faq">FAQ</a>
+                  <a href="/#faq">FAQ</a>
                 </li>
 
                 <li>
