@@ -44,27 +44,3 @@
 <h2>Live Demo</h2>
 
 <p>https://lumadentstudio.netlify.app/</p>
-
-<h2>Project Structure</h2>
-
-<p>
-  src/ <br>
-    app/ <br>
-      booking <br>
-      contact <br>
-      cookie <br>
-      privacy <br>
-      terms 
-      treatments
-    components/
-      layout
-      sections
-      seo
-      ui
-    styles/
-      abstracts
-      base
-      components
-      layout
-      sections
-</p> 
