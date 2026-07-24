@@ -12,9 +12,6 @@ export default function BookingBehaviours() {
     let calendarAnimationTimer: number | undefined;
     let dateTimeResetTimer: number | undefined;
 
-    /*
-     * Booking visit types
-     */
     const bookingOptions =
       document.querySelectorAll<HTMLButtonElement>(
         ".booking .booking-option",
@@ -47,9 +44,6 @@ export default function BookingBehaviours() {
       });
     }
 
-    /*
-     * Booking time selector
-     */
     const bookingTime =
       document.querySelector<HTMLElement>(
         ".booking-time",
@@ -280,13 +274,6 @@ export default function BookingBehaviours() {
       );
     }
 
-    /*
-     * Generic booking selects
-     *
-     * Kept from the original main.js even
-     * though this particular form currently
-     * uses the custom date and time controls.
-     */
     const bookingSelects =
       document.querySelectorAll<HTMLElement>(
         ".booking-select",
@@ -404,9 +391,6 @@ export default function BookingBehaviours() {
       { signal },
     );
 
-    /*
-     * Booking calendar
-     */
     const bookingDate =
       document.querySelector<HTMLElement>(
         ".booking-date",
@@ -804,9 +788,6 @@ export default function BookingBehaviours() {
       renderCalendar();
     }
 
-    /*
-     * Booking form
-     */
     const bookingForm =
       document.querySelector<HTMLFormElement>(
         ".booking-form",

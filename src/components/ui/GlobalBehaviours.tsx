@@ -38,9 +38,6 @@ export default function GlobalBehaviours() {
     let preloaderFallbackTimer: number | undefined;
     let scrollAnimationFrame: number | undefined;
 
-    /*
-     * Hero video mobile fix
-     */
     const heroVideoMobileFix = () => {
       if (!heroVideo) return;
 
@@ -63,9 +60,6 @@ export default function GlobalBehaviours() {
       }
     };
 
-    /*
-     * AOS
-     */
     const aosInit = () => {
       const isMobileOrTablet = window.innerWidth <= 1024;
 
@@ -94,9 +88,6 @@ export default function GlobalBehaviours() {
       AOS.refreshHard();
     };
 
-    /*
-     * Preloader
-     */
     const runPreloader = () => {
       if (body.dataset.preloaderHasRun === "true") {
         return;
@@ -135,9 +126,6 @@ export default function GlobalBehaviours() {
       }, 1300);
     };
 
-    /*
-     * Scroll restoration
-     */
     const handleInitialPageLoad = () => {
       if ("scrollRestoration" in history) {
         history.scrollRestoration = "manual";
@@ -155,9 +143,6 @@ export default function GlobalBehaviours() {
       }, 10);
     };
 
-    /*
-     * Desktop smooth scrolling
-     */
     const getDesktopOffset = (targetId: string) => {
       if (targetId === "#hero") {
         return 125;
@@ -213,9 +198,6 @@ export default function GlobalBehaviours() {
         window.requestAnimationFrame(animate);
     };
 
-    /*
-     * Mobile/tablet smooth scrolling
-     */
     const isMobileOrTablet = () =>
       window.matchMedia(
         "(max-width: 1024px)",
@@ -284,9 +266,6 @@ export default function GlobalBehaviours() {
         window.requestAnimationFrame(animate);
     };
 
-    /*
-     * Handle anchor navigation
-     */
    const handleAnchorNavigation = (
       event: MouseEvent,
     ) => {
@@ -346,13 +325,6 @@ export default function GlobalBehaviours() {
         destinationPath === "/" ||
         destinationPath === "/index.html";
 
-      /*
-      * When we are not currently on the homepage,
-      * allow /#section to navigate normally.
-      *
-      * The homepage preloader will then read the
-      * hash and position the page before revealing it.
-      */
       if (
         !isCurrentPageHomepage ||
         !isDestinationHomepage
@@ -369,10 +341,6 @@ export default function GlobalBehaviours() {
         return;
       }
 
-      /*
-      * We are already on the homepage, so use the
-      * existing custom smooth-scroll behaviour.
-      */
       const target =
         document.querySelector<HTMLElement>(
           targetId,
@@ -410,9 +378,6 @@ export default function GlobalBehaviours() {
       );
     };
 
-    /*
-     * Header shrinking
-     */
     const updateHeaderState = () => {
       if (!header) return;
 
@@ -422,9 +387,6 @@ export default function GlobalBehaviours() {
       );
     };
 
-    /*
-     * Hero scroll indicator
-     */
     const updateHeroScrollIndicator = () => {
       if (!heroScrollIndicator) return;
 
@@ -434,9 +396,6 @@ export default function GlobalBehaviours() {
       );
     };
 
-    /*
-     * Magnetic desktop navigation
-     */
     const magneticLinks = Array.from(
       document.querySelectorAll<HTMLAnchorElement>(
         ".header .navmenu a",
@@ -498,9 +457,6 @@ export default function GlobalBehaviours() {
       },
     );
 
-    /*
-     * Mobile navigation
-     */
     const openMobileNavigation = (
       event: MouseEvent,
     ) => {
@@ -555,9 +511,6 @@ export default function GlobalBehaviours() {
       closeMobileNavigation();
     };
 
-    /*
-     * Active navigation scroll-spy
-     */
     const scrollSpySections = Array.from(
       document.querySelectorAll<HTMLElement>(
         "#services, #results, #reviews, #faq",
@@ -674,9 +627,6 @@ export default function GlobalBehaviours() {
       });
     };
 
-    /*
- * Initial setup
- */
     body.classList.remove(
       "mobile-nav-active",
     );
@@ -696,9 +646,6 @@ export default function GlobalBehaviours() {
       runPreloader();
     }
 
-    /*
-     * Event listeners
-     */
     window.addEventListener(
       "load",
       handleInitialPageLoad,
